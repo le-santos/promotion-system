@@ -10,3 +10,7 @@
 <dd><%= @promotion.expiration_date.strftime("%d/%m/%Y") %></dd> 
 <dt>Quantidade de cupons:</dt>
 <dd><%= @promotion.coupon_quantity %></dd>
+
+<hr>
+
+<%= link_to 'Voltar', promotions_path %>
