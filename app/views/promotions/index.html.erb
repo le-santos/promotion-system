@@ -3,8 +3,9 @@
     <dt>Nome:</dt>
     <dd><%= promotion.name %></dd>
     <dt>Descrição:</dt>
-    <dd><%= promotion.description %></dd>
+    <dd><%= link_to promotion.description, promotion_path(promotion[:id]) %></dd>
     <dt>Porcentagem do Desconto:</dt>
     <dd><%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></dd>
+    <hr>
   <% end %>
 <dl>
