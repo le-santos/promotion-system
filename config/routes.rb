@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   root 'home#index'
-  resources :promotions, only: [:index, :show]
+  resources :promotions, only: [:index, :new, :create, :show]
 end

@@ -1,3 +1,5 @@
+<h2>Detalhes do cupom: <%= @promotion.name %></h2>
+
 <dt>Nome:</dt>
 <dd><%= @promotion.name %></dd>
 <dt>Descrição:</dt>
@@ -7,7 +9,7 @@
 <dt>Código:</dt>
 <dd><%= @promotion.code %></dd>
 <dt>Data de expiração:</dt>
-<dd><%= @promotion.expiration_date.strftime("%d/%m/%Y") %></dd> 
+<dd><%= @promotion.expiration_date.strftime("%d/%m/%Y") %></dd>
 <dt>Quantidade de cupons:</dt>
 <dd><%= @promotion.coupon_quantity %></dd>
 
