@@ -1,5 +1,16 @@
 <h2>Cadastro de nova promoção</h2>
 
+<% if  @promotion.errors.any? %>
+  <div>
+    <h4>Para salvar é necessário corrigir <%= pluralize(@promotion.errors.count, "erro") %>: </h4>
+    <ul>
+    <% @promotion.errors.each do |error| %>
+      <li style='color: red;'><%= error.full_message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for @promotion do |f| %>
   <%= f.label :name, 'Nome' %><br>
   <%= f.text_field :name %><br>
@@ -21,3 +32,4 @@
   
   <%= f.submit 'Criar promoção' %>
 <% end %>
+
