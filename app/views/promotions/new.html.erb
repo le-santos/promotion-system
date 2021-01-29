@@ -11,7 +11,7 @@
   </div>
 <% end %>
 
-<%= form_for @promotion do |f| %>
+<%= form_with model: @promotion do |f| %>
   <%= f.label :name, 'Nome' %><br>
   <%= f.text_field :name %><br>
 
