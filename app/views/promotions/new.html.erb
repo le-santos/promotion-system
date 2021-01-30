@@ -1,8 +1,9 @@
 <h2>Cadastro de nova promoção</h2>
 
 <% if  @promotion.errors.any? %>
-  <div>
-    <h4>Para salvar é necessário corrigir <%= pluralize(@promotion.errors.count, "erro") %>: </h4>
+  <div class="alert">
+    <h4>Não foi possível criar a promoção</h4>
+    <p>Para salvar é necessário corrigir <%= pluralize(@promotion.errors.count, "erro") %>: </p>
     <ul>
     <% @promotion.errors.each do |error| %>
       <li style='color: red;'><%= error.full_message %></li>
@@ -12,22 +13,22 @@
 <% end %>
 
 <%= form_with model: @promotion do |f| %>
-  <%= f.label :name, 'Nome' %><br>
+  <%= f.label :name %><br>
   <%= f.text_field :name %><br>
 
-  <%= f.label :description, 'Descrição' %><br>
+  <%= f.label :description %><br>
   <%= f.text_field :description %><br>
   
-  <%= f.label :code, 'Código' %><br>
+  <%= f.label :code %><br>
   <%= f.text_field :code %><br>
   
-  <%= f.label :discount_rate, 'Desconto' %><br>
+  <%= f.label :discount_rate %><br>
   <%= f.text_field :discount_rate %><br>
   
-  <%= f.label :coupon_quantity, 'Quantidade de cupons' %><br>
+  <%= f.label :coupon_quantity %><br>
   <%= f.text_field :coupon_quantity %><br>
   
-  <%= f.label :expiration_date, 'Data de término' %><br>
+  <%= f.label :expiration_date %><br>
   <%= f.text_field :expiration_date %><br>
   
   <%= f.submit 'Criar promoção' %>
