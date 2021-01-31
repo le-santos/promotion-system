@@ -19,7 +19,20 @@ class PromotionsController < ApplicationController
     else
       render :new
     end
+  end
 
+  def edit
+    @promotion = Promotion.find(params[:id])
+  end
+
+  def update
+    @promotion = Promotion.find(params[:id])
+
+    if @promotion.update(promotion_params)
+      redirect_to @promotion
+    else
+      render :edit
+    end
   end
 
   private

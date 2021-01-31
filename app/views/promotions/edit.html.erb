@@ -1,0 +1,22 @@
+<%= form_with model: @promotion do |f| %>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %><br>
+  
+  <%# Precisa criar as traduçoes para esse model ou usar via partials %>
+  <%= f.label :description, 'Descrição' %><br>
+  <%= f.text_field :description %><br>
+  
+  <%= f.label :code %><br>
+  <%= f.text_field :code %><br>
+  
+  <%= f.label :discount_rate %><br>
+  <%= f.text_field :discount_rate %><br>
+  
+  <%= f.label :coupon_quantity %><br>
+  <%= f.text_field :coupon_quantity %><br>
+  
+  <%= f.label :expiration_date %><br>
+  <%= f.text_field :expiration_date %><br>
+  
+  <%= f.submit 'Salvar alterações' %>
+<% end %>
