@@ -1,0 +1,39 @@
+<%# determina ação do form dinamicamente %>
+<% form_action = local_assigns[:new_promotion] ? 'criar': 'editar'%>
+<% form_submit_type = local_assigns[:new_promotion] ? 'Criar promoção': 'Salvar alterações'%>
+
+<%# Mensagens de erro após validação %>
+<% if  @promotion.errors.any? %>
+  <div class="alert">
+    <h4>Não foi possível <%= form_action %> a promoção</h4>
+    <p>Para salvar é necessário corrigir <%= pluralize(@promotion.errors.count, 'erro', locale: 'pt-BR') %>: </p>
+    <ul>
+    <% @promotion.errors.each do |error| %>
+      <li style='color: red;'><%= error.full_message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%# Form vinculado ao model %>
+<%= form_with model: @promotion do |f| %>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %><br>
+
+  <%= f.label :description %><br>
+  <%= f.text_field :description %><br>
+  
+  <%= f.label :code %><br>
+  <%= f.text_field :code %><br>
+  
+  <%= f.label :discount_rate %><br>
+  <%= f.text_field :discount_rate %><br>
+  
+  <%= f.label :coupon_quantity %><br>
+  <%= f.text_field :coupon_quantity %><br>
+  
+  <%= f.label :expiration_date %><br>
+  <%= f.text_field :expiration_date %><br>
+  
+  <%= f.submit "#{form_submit_type}" %>
+<% end %>
