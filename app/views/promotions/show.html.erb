@@ -14,5 +14,6 @@
 <dd><%= @promotion.coupon_quantity %></dd>
 
 <hr>
-<%= link_to 'Editar Promoção', edit_promotion_path(@promotion[:id]) %>
+<%= link_to 'Editar Promoção', edit_promotion_path(@promotion) %>
+<%= link_to 'Excluir', @promotion, method: :delete, data: { confirm: 'Remover promoção?'} %>
 <%= link_to 'Voltar', promotions_path %>
