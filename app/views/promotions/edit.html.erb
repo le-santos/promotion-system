@@ -1,3 +1,18 @@
+<h2>Editar promoção</h2>
+
+<% if  @promotion.errors.any? %>
+  <div class="alert">
+    <h4>Não foi possível editar a promoção</h4>
+    <p>Para salvar é necessário corrigir <%= pluralize(@promotion.errors.count, "erro") %>: </p>
+    <ul>
+    <% @promotion.errors.each do |error| %>
+      <li style='color: red;'><%= error.full_message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
 <%= form_with model: @promotion do |f| %>
   <%= f.label :name %><br>
   <%= f.text_field :name %><br>
@@ -20,3 +35,6 @@
   
   <%= f.submit 'Salvar alterações' %>
 <% end %>
+
+<br>
+<%= link_to 'Cancelar edição', @promotion %>
