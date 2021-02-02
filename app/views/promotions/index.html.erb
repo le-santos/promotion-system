@@ -6,9 +6,9 @@
     <% @promotions.each do |promotion| %>
       <hr>
       <dt>Nome:</dt>
-      <dd><%= promotion.name %></dd>
+      <dd><%= link_to promotion.name, promotion_path(promotion[:id]) %></dd>
       <dt>Descrição:</dt>
-      <dd><%= link_to promotion.description, promotion_path(promotion[:id]) %></dd>
+      <dd><%= promotion.description %></dd>
       <dt>Porcentagem do Desconto:</dt>
       <dd><%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></dd>
     <% end %>
