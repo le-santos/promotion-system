@@ -7,25 +7,25 @@ feature 'Admin deletes a promotion' do
   end
 
   scenario 'from a link on details page' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033')
     
     visit root_path
     click_on 'Promoções'
-    click_on 'Promoção de Natal'
+    click_on promotion.name
 
-    expect(page).to have_link('Excluir', href: promotion_path(Promotion.last[:id]))
+    expect(page).to have_link('Excluir', href: promotion_path(promotion))
   end
 
   scenario 'successfully after confirming exclusion' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033')
     
     visit root_path
     click_on 'Promoções'
-    click_on 'Promoção de Natal'
+    click_on promotion.name
     
     accept_confirm do
       click_link 'Excluir'
@@ -37,17 +37,17 @@ feature 'Admin deletes a promotion' do
   end
 
   scenario 'and can abort the exclusion' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033')
     
     visit root_path
     click_on 'Promoções'
-    click_on 'Promoção de Natal'
+    click_on promotion.name
     click_link 'Excluir'
     page.driver.browser.switch_to.alert.dismiss
 
-    expect(current_path).to eq(promotion_path(Promotion.last))
+    expect(current_path).to eq(promotion_path(promotion))
     expect(Promotion.any?).to eq(true)
     expect(page).to have_content('Promoção de Natal')
   end
