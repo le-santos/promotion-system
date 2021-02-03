@@ -1,5 +1,11 @@
 <h2>Detalhes do cupom: <%= @promotion.name %></h2>
 
+<% if flash[:notice] %>
+  <p><em style='color: blue;'><%= flash[:notice] %></em></p>
+<% end %>
+
+<%= link_to 'Voltar', promotions_path %>
+
 <dt>Nome:</dt>
 <dd><%= @promotion.name %></dd>
 <dt>Descrição:</dt>
@@ -9,11 +15,21 @@
 <dt>Código:</dt>
 <dd><%= @promotion.code %></dd>
 <dt>Data de expiração:</dt>
-<dd><%= @promotion.expiration_date.strftime("%d/%m/%Y") %></dd>
+<dd><%= I18n.localize @promotion.expiration_date %></dd>
 <dt>Quantidade de cupons:</dt>
 <dd><%= @promotion.coupon_quantity %></dd>
 
 <hr>
 <%= link_to 'Editar Promoção', edit_promotion_path(@promotion) %>
 <%= link_to 'Excluir', @promotion, method: :delete, data: { confirm: 'Remover promoção?'} %>
-<%= link_to 'Voltar', promotions_path %>
+<br>
+<%= link_to 'Gerar Cupons', generate_coupons_promotion_path(@promotion), method: :post %>
+
+
+<% if @promotion.coupons.any? %>
+  <h3>Cupons disponíveis</h3><br>
+  <% @promotion.coupons.each do |coupon| %>
+    <p><%= coupon.code %></p>
+  <% end %>
+<% end %>
+
