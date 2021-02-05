@@ -44,14 +44,10 @@ class PromotionsController < ApplicationController
 
   def generate_coupons
     @promotion = Promotion.find(params[:id])
-    
-    1.upto(@promotion.coupon_quantity).each do |number|
-      code_num = number.to_s.rjust(4, '0')
-      Coupon.create!(code: "#{@promotion.code}-#{code_num}", promotion: @promotion) 
-    end
-    
-    flash[:notice] = 'Cupons gerados com sucesso'
-    redirect_to @promotion
+    # metodo extraido para model, como metodo de instancia 
+    @promotion.generate_coupons!
+    # Usa 'lazy' lookup com i18n e já envia o flash no redirect
+    redirect_to promotion_path(@promotion), notice: t('.success')
   end
 
   private

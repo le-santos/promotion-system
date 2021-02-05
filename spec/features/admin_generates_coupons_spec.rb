@@ -3,8 +3,8 @@ require 'rails_helper'
 feature 'Admin generates coupons' do
   scenario 'of a promotion' do
     promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
-                      code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
-                      expiration_date: '22/12/2030')
+                                  code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
+                                  expiration_date: '22/12/2030')
     
     visit root_path
     click_on 'Promoções'
