@@ -5,8 +5,8 @@ pt-BR:
         one: Promoção
         other: Promoções
       coupon:
-        one: cupom
-        other: cupons
+        one: Cupom
+        other: Cupons
     attributes:
       promotion:
         name: "Nome"

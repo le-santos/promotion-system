@@ -33,6 +33,7 @@
 <% if @promotion.coupons.any? %>
   <h3>Cupons disponíveis</h3><br>
   <% @promotion.coupons.each do |coupon| %>
+    <%# TODO refactorar com i18n - traduzir active %>
     <% status = coupon.active? ? '' : ' (Inativo)' %>
     <p><%= coupon.code + status %></p>
     <%= link_to 'Desativar', inactivate_coupon_path(coupon), method: :post  %>
