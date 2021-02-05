@@ -22,9 +22,11 @@
 <hr>
 <%= link_to 'Editar Promoção', edit_promotion_path(@promotion) %>
 <%= link_to 'Excluir', @promotion, method: :delete, data: { confirm: 'Remover promoção?'} %>
-<br>
-<%= link_to 'Gerar Cupons', generate_coupons_promotion_path(@promotion), method: :post %>
 
+<br>
+<% unless @promotion.coupons.size == @promotion.coupon_quantity  %>
+  <%= link_to 'Gerar Cupons', generate_coupons_promotion_path(@promotion), method: :post %>
+<% end %>
 
 <% if @promotion.coupons.any? %>
   <h3>Cupons disponíveis</h3><br>

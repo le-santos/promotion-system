@@ -18,4 +18,15 @@ feature 'Admin generates coupons' do
     expect(page).to have_content('LOUCO40-0100')
     expect(page).not_to have_content('LOUCO40-0101')
   end
+
+  scenario 'and hide button after coupons creation' do
+    promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
+                                  code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
+                                  expiration_date: '22/12/2030')
+    
+    visit promotion_path(promotion)
+    click_on 'Gerar Cupons'
+
+    expect(page).not_to have_link( 'Gerar Cupons' )
+  end
 end
