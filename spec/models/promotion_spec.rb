@@ -44,4 +44,34 @@ describe Promotion do
       expect(promotion.errors[:code]).to include('já está em uso')
     end
   end
+
+  context '#generate_coupons!' do
+    it 'generate coupons from coupon_quantity' do
+      promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
+                                  code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
+                                  expiration_date: '22/12/2030')
+
+      promotion.generate_coupons!
+
+      expect(promotion.coupons.size).to eq(promotion.coupon_quantity)
+      codes = promotion.coupons.pluck(:code) 
+      expect(codes).to include('LOUCO40-0001')
+      expect(codes).to include('LOUCO40-0100')
+      expect(codes).not_to include('LOUCO40-0000')
+      expect(codes).not_to include('LOUCO40-0101')
+    end
+
+    it 'do not generate if error' do
+      promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
+                                  code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
+                                  expiration_date: '22/12/2030')
+
+      promotion.coupons.create!(code: 'LOUCO40-0010')
+
+      expect { promotion.generate_coupons! }.to raise_error(ActiveRecord::RecordNotUnique) 
+
+      expect(promotion.coupons.reload.size).to eq(1)
+    end
+  end
+
 end
