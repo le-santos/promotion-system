@@ -72,6 +72,30 @@ describe Promotion do
 
       expect(promotion.coupons.reload.size).to eq(1)
     end
+
+    it 'adds coupons if coupon_quantity increases' do
+      promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
+                                  code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 10, 
+                                  expiration_date: '22/12/2030')
+    
+      promotion.generate_coupons!
+      promotion.coupon_quantity = 15
+      promotion.generate_coupons!
+      
+      expect(promotion.coupons.size).to eq(15)
+    end
+
+    it 'removes coupons if coupon_quantity decreases' do
+      promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
+                                  code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 10, 
+                                  expiration_date: '22/12/2030')
+    
+      promotion.generate_coupons!
+      promotion.coupon_quantity = 5
+      promotion.generate_coupons!
+      
+      expect(promotion.coupons.reload.size).to eq(5)
+    end
   end
 
 end
