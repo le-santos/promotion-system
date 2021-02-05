@@ -13,11 +13,13 @@
 <dt>Porcentagem do Desconto:</dt>
 <dd><%= number_to_percentage @promotion.discount_rate, precision: 2, separator: ',' %></dd>
 <dt>Código:</dt>
-<dd><%= @promotion.code %></dd>
+<dd><%= @promotion.code %></dd>irb
 <dt>Data de expiração:</dt>
 <dd><%= I18n.localize @promotion.expiration_date %></dd>
 <dt>Quantidade de cupons:</dt>
 <dd><%= @promotion.coupon_quantity %></dd>
+<dt>Cupons disponíveis:</dt>
+<dd><%= pluralize(@promotion.coupons.where( status: 'active').size, 'cupom', locale: 'pt-BR') %></dd>
 
 <hr>
 <%= link_to 'Editar Promoção', edit_promotion_path(@promotion) %>
@@ -31,7 +33,9 @@
 <% if @promotion.coupons.any? %>
   <h3>Cupons disponíveis</h3><br>
   <% @promotion.coupons.each do |coupon| %>
-    <p><%= coupon.code %></p>
+    <% status = coupon.active? ? '' : ' (Inativo)' %>
+    <p><%= coupon.code + status %></p>
+    <%= link_to 'Desativar', inactivate_coupon_path(coupon), method: :post  %>
   <% end %>
 <% end %>
 
