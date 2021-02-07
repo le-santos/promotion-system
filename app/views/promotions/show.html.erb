@@ -6,37 +6,44 @@
 
 <%= link_to 'Voltar', promotions_path %>
 
-<dt>Nome:</dt>
-<dd><%= @promotion.name %></dd>
-<dt>Descrição:</dt>
-<dd><%= @promotion.description %></dd>
-<dt>Porcentagem do Desconto:</dt>
-<dd><%= number_to_percentage @promotion.discount_rate, precision: 2, separator: ',' %></dd>
-<dt>Código:</dt>
-<dd><%= @promotion.code %></dd>irb
-<dt>Data de expiração:</dt>
-<dd><%= I18n.localize @promotion.expiration_date %></dd>
-<dt>Quantidade de cupons:</dt>
-<dd><%= @promotion.coupon_quantity %></dd>
-<dt>Cupons disponíveis:</dt>
-<dd><%= pluralize(@promotion.coupons.where( status: 'active').size, 'cupom', locale: 'pt-BR') %></dd>
-
 <hr>
+<dl>
+  <dt>Nome:</dt>
+  <dd><%= @promotion.name %></dd>
+  <dt>Descrição:</dt>
+  <dd><%= @promotion.description %></dd>
+  <dt>Porcentagem do Desconto:</dt>
+  <dd><%= number_to_percentage @promotion.discount_rate, precision: 2, separator: ',' %></dd>
+  <dt>Código:</dt>
+  <dd><%= @promotion.code %></dd>irb
+  <dt>Data de expiração:</dt>
+  <dd><%= I18n.localize @promotion.expiration_date %></dd>
+  <dt>Quantidade de cupons:</dt>
+  <dd><%= @promotion.coupon_quantity %></dd>
+  <dt>Cupons disponíveis:</dt>
+  <dd><%= I18n.t :coupon, 
+    count: @promotion.reload.coupons.where( status: 'active').size %></dd>
+</dl>
+<hr>
+
 <%= link_to 'Editar Promoção', edit_promotion_path(@promotion) %>
 <%= link_to 'Excluir', @promotion, method: :delete, data: { confirm: 'Remover promoção?'} %>
-
 <br>
+
 <% unless @promotion.coupons.size == @promotion.coupon_quantity  %>
   <%= link_to 'Gerar Cupons', generate_coupons_promotion_path(@promotion), method: :post %>
 <% end %>
 
 <% if @promotion.coupons.any? %>
   <h3>Cupons disponíveis</h3><br>
-  <% @promotion.coupons.each do |coupon| %>
-    <%# TODO refactorar com i18n - traduzir active %>
-    <% status = coupon.active? ? '' : ' (Inativo)' %>
-    <p><%= coupon.code + status %></p>
-    <%= link_to 'Desativar', inactivate_coupon_path(coupon), method: :post  %>
+    <% @promotion.coupons.each do |coupon| %>
+      <div id="coupon-<%= coupon.id %>" > 
+        <% inactive_status = coupon.inactive? ? "(#{t(coupon.status)})" : ''  %>
+        <p><%= "#{coupon.code} #{inactive_status}"  %></p>
+        <% if coupon.active? %>
+          <%= link_to 'Desativar', inactivate_coupon_path(coupon), method: :post  %>
+        <% end %>
+      </div>
   <% end %>
 <% end %>
 

@@ -2,11 +2,11 @@ pt-BR:
   activerecord:
     models:
       promotion: 
-        one: Promoção
-        other: Promoções
-      coupon:
-        one: Cupom
-        other: Cupons
+        one: "Promoção"
+        other: "Promoções"
+      coupon:  
+        one: "Cupom"
+        other: "Cupons"
     attributes:
       promotion:
         name: "Nome"

@@ -1,3 +1,6 @@
 pt-BR:
-  active: 'ativo'
-  inactive: 'inativo'
+  active: 'Ativo'
+  inactive: 'Inativo'
+  coupon:  
+    one: '%{count} cupom'
+    other: '%{count} cupons'
