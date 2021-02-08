@@ -7,7 +7,13 @@ pt-BR:
       coupon:  
         one: "Cupom"
         other: "Cupons"
+      user:
+        one: "Usuário"
+        other: "Usuários"
     attributes:
+      user:
+        email: 'E-mail'
+        password: 'Senha'
       promotion:
         name: "Nome"
         code: "Código"
