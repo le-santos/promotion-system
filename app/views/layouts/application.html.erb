@@ -16,7 +16,8 @@
         <%= current_user.email %>
         <%= link_to  'Sair', destroy_user_session_path, method: :delete %>
       <% else %>
-        <%= link_to 'Entrar', new_user_session_path %> 
+        <%= link_to 'Entrar', new_user_session_path %>
+        <%= link_to 'Inscrever-se', new_user_registration_path %> 
       <% end %>
     </nav>
     <p class="notice"><%= notice %></p>
