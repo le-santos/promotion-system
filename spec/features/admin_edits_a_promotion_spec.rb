@@ -2,10 +2,12 @@ require 'rails_helper'
 
 feature 'Admin edits a promotion' do
   scenario 'from a link on promotion page' do
+    user = User.create!(email: 'jose@email.com', password: '123456')
     promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
                       code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
-                      expiration_date: '22/12/2030')
+                      expiration_date: '22/12/2030', user: user)
 
+    login_as user, scope: :user
     visit root_path
     click_on 'Promoções'
     click_on promotion.name
@@ -15,10 +17,12 @@ feature 'Admin edits a promotion' do
   end
 
   scenario 'successfully' do
+    user = User.create!(email: 'jose@email.com', password: '123456')
     promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
                       code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
-                      expiration_date: '22/12/2030')
+                      expiration_date: '22/12/2030', user: user)
 
+    login_as user, scope: :user
     visit root_path
     click_on 'Promoções'
     click_on promotion.name
@@ -31,10 +35,12 @@ feature 'Admin edits a promotion' do
   end
 
   scenario 'and attributes cannot be blank' do
+    user = User.create!(email: 'jose@email.com', password: '123456')
     promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
                       code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
-                      expiration_date: '22/12/2030')
+                      expiration_date: '22/12/2030', user: user)
     
+    login_as user, scope: :user
     visit root_path
     click_on 'Promoções'
     click_on promotion.name
@@ -57,13 +63,15 @@ feature 'Admin edits a promotion' do
   end
 
   scenario 'and code must be unique' do
+    user = User.create!(email: 'jose@email.com', password: '123456')
     Promotion.create!(name: 'SuperPromo', description: 'Descontos imensos',
                       code: 'SUPERPRO', discount_rate: 40,  coupon_quantity: 100, 
-                      expiration_date: '22/12/2030')
+                      expiration_date: '22/12/2030', user: user)
     promotion = Promotion.create!(name: 'Descontaço', description: 'Que desconto!',
                       code: 'BIGPROMO', discount_rate: 40,  coupon_quantity: 100, 
-                      expiration_date: '22/12/2030')
+                      expiration_date: '22/12/2030', user: user)
 
+    login_as user, scope: :user
     visit root_path
     click_on 'Promoções'
     click_on promotion.name
@@ -77,10 +85,12 @@ feature 'Admin edits a promotion' do
   end
 
   scenario 'and cancel edit' do
+    user = User.create!(email: 'jose@email.com', password: '123456')
     promotion = Promotion.create!(name: 'Descontaço', description: 'Que desconto!',
                       code: 'BIGPROMO', discount_rate: 40,  coupon_quantity: 100, 
-                      expiration_date: '22/12/2030')
+                      expiration_date: '22/12/2030', user: user)
 
+    login_as user, scope: :user
     visit root_path
     click_on 'Promoções'
     click_on promotion.name

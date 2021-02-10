@@ -7,10 +7,12 @@ feature 'Admin deletes a promotion' do
   end
 
   scenario 'from a link on details page' do
+    user = User.create!(email: 'jose@email.com', password: '123456')
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
-    
+                      expiration_date: '22/12/2033', user: user)
+
+    login_as user, scope: :user    
     visit root_path
     click_on 'Promoções'
     click_on promotion.name
@@ -19,10 +21,12 @@ feature 'Admin deletes a promotion' do
   end
 
   scenario 'successfully after confirming exclusion' do
+    user = User.create!(email: 'jose@email.com', password: '123456')
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
+                                  code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                                  expiration_date: '22/12/2033', user: user)
     
+    login_as user, scope: :user
     visit root_path
     click_on 'Promoções'
     click_on promotion.name
@@ -37,10 +41,12 @@ feature 'Admin deletes a promotion' do
   end
 
   scenario 'and can abort the exclusion' do
+    user = User.create!(email: 'jose@email.com', password: '123456')
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
+                                  code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                                  expiration_date: '22/12/2033', user: user)
     
+    login_as user, scope: :user
     visit root_path
     click_on 'Promoções'
     click_on promotion.name

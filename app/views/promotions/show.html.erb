@@ -5,6 +5,7 @@
 <% end %>
 
 <%= link_to 'Voltar', promotions_path %>
+<p>Cadastrada por: <%= @promotion.user.email  %> </p>
 
 <hr>
 <dl>
@@ -22,7 +23,7 @@
   <dd><%= @promotion.coupon_quantity %></dd>
   <dt>Cupons disponíveis:</dt>
   <dd><%= I18n.t :coupon, 
-    count: @promotion.reload.coupons.where( status: 'active').size %></dd>
+        count: @promotion.reload.coupons.where( status: 'active' ).size %></dd>
 </dl>
 <hr>
 
