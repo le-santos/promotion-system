@@ -24,8 +24,19 @@
   <dt>Cupons disponíveis:</dt>
   <dd><%= I18n.t :coupon, 
         count: @promotion.reload.coupons.where( status: 'active' ).size %></dd>
+        
+  <% if @promotion.approved? %>
+    <dt>Status:</dt> <dd>Aprovada</dd>
+  <% end %>
 </dl>
 <hr>
+
+<% unless @promotion.user == current_user %>
+  <%= link_to 'Aprovar Promoção', approve_promotion_path, method: :post %>
+<% end %>
+
+
+
 
 <%= link_to 'Editar Promoção', edit_promotion_path(@promotion) %>
 <%= link_to 'Excluir', @promotion, method: :delete, data: { confirm: 'Remover promoção?'} %>

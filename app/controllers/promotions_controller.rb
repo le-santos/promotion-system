@@ -53,7 +53,14 @@ class PromotionsController < ApplicationController
     redirect_to promotion_path(@promotion), notice: t('.success')
   end
 
+  def approve
+    promotion = Promotion.find(params[:id])
+    promotion.approve!(current_user)
+    redirect_to promotion
+  end
+
   private
+
     def promotion_params
       params
         .require(:promotion)

@@ -104,4 +104,34 @@ describe Promotion do
       expect(promotion.coupons.reload.size).to eq(5)
     end
   end
+
+  context '#approve!' do
+    describe '' do
+      it 'should generate PromotionApproval object' do
+        creator = User.create!(email: 'jose@email.com', password: '123456')
+        approval_user = User.create!(email: 'pedro@email.com', password: '123456')
+        promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                                      expiration_date: '22/12/2033', user: creator)
+
+        promotion.approve!(approval_user)
+
+        promotion.reload
+        expect(promotion.approved?).to be_truthy
+        expect(promotion.approver).to eq(approval_user)
+      end
+
+      it 'should not approve if same user object' do
+        creator = User.create!(email: 'jose@email.com', password: '123456')
+        promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                                      expiration_date: '22/12/2033', user: creator)
+
+        promotion.approve!(creator)
+
+        promotion.reload
+        expect(promotion.approved?).to be_falsy
+      end
+    end
+  end
 end
