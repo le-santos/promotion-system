@@ -11,6 +11,7 @@ class PromotionsController < ApplicationController
 
   def new
     @promotion = Promotion.new()
+    @product_categories = ProductCategory.all
   end
 
   def create
@@ -20,6 +21,7 @@ class PromotionsController < ApplicationController
     if @promotion.save
       redirect_to @promotion
     else
+      @product_categories = ProductCategory.all
       render :new
     end
   end
@@ -70,7 +72,8 @@ class PromotionsController < ApplicationController
             :discount_rate, 
             :code, 
             :expiration_date, 
-            :coupon_quantity)
+            :coupon_quantity,
+            product_category_ids: [])
     end
 
 end

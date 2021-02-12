@@ -24,7 +24,11 @@
   <dt>Cupons disponíveis:</dt>
   <dd><%= I18n.t :coupon, 
         count: @promotion.reload.coupons.where( status: 'active' ).size %></dd>
-        
+  <dt>Categorias:</dt>
+  <%= @promotion.product_categories.each do |category| %>
+    <dd><%= category.name  %></dd>
+  <% end %>
+  
   <% if @promotion.approved? %>
     <dt>Status:</dt> <dd>Aprovada</dd>
   <% end %>

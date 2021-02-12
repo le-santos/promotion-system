@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Admin approves a promotion' do
   
-  # este scenario deveria estar no que testa a show - admin view promotion
+  #TODO este scenario deveria estar no que testa a show - admin view promotion
   scenario 'and must be signed in' do 
     user = User.create!(email: 'jose@email.com', password: '123456')
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
