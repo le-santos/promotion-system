@@ -12,6 +12,7 @@ class PromotionsController < ApplicationController
   def new
     @promotion = Promotion.new()
     @product_categories = ProductCategory.all
+    @payment_methods = PaymentMethod.all
   end
 
   def create
@@ -27,6 +28,7 @@ class PromotionsController < ApplicationController
   end
 
   def edit
+    @product_categories = ProductCategory.all
     @promotion = Promotion.find(params[:id])
   end
 
@@ -58,6 +60,7 @@ class PromotionsController < ApplicationController
   def approve
     promotion = Promotion.find(params[:id])
     promotion.approve!(current_user)
+    PromotionMailer.notify_approval(promotion.id)
     redirect_to promotion
   end
 

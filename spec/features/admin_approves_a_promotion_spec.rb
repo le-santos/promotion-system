@@ -45,7 +45,10 @@ feature 'Admin approves a promotion' do
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                               code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                               expiration_date: '22/12/2033', user: creator)
-    
+
+    mailer_spy = spy(PromotionMailer)
+    stub_const('PromotionMailer', mailer_spy)
+                          
     login_as approval_user, scope: :user
     visit promotion_path(promotion)
     click_on 'Aprovar Promoção'
@@ -56,5 +59,6 @@ feature 'Admin approves a promotion' do
     expect(promotion.approved?).to be_truthy
     expect(promotion.approver).to eq(approval_user) 
     expect(page).to have_content('Status: Aprovada')
+    expect(mailer_spy).to have_received(:notify_approval).with(promotion.id)
   end
 end

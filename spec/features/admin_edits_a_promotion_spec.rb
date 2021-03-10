@@ -29,6 +29,8 @@ feature 'Admin edits a promotion' do
     click_on 'Editar Promoção'
     fill_in 'Descrição', with: 'Descontos extremos'
     click_on 'Salvar alterações'
+    #check 'Smartphones'
+
 
     expect(current_path).to eq(promotion_path(promotion))
     expect(page).to have_content('Descontos extremos')
@@ -39,6 +41,8 @@ feature 'Admin edits a promotion' do
     promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
                       code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
                       expiration_date: '22/12/2030', user: user)
+    ProductCategory.create!(name: 'Smartphones', code: 'SMARTPH')
+    ProductCategory.create!(name: 'Jogos', code: 'GAME')
     
     login_as user, scope: :user
     visit root_path
