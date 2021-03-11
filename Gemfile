@@ -7,6 +7,7 @@ ruby '3.0.0'
 gem 'rails', '~> 6.1.1'
 gem 'devise'
 gem 'faraday' 
+gem 'rexml'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
@@ -49,6 +50,7 @@ end
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

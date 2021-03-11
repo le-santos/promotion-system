@@ -3,10 +3,11 @@ require 'rails_helper'
 feature 'Admin deletes a promotion' do
   # select driver for this test only  
   background do
-    Capybara.current_driver = :selenium_chrome
+    Capybara.current_driver = :selenium_chrome_headless
   end
 
-  scenario 'from a link on details page' do
+  # Marca o teste como :js ativo, para ativar o selenium
+  scenario 'from a link on details page', :js do
     user = User.create!(email: 'jose@email.com', password: '123456')
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
