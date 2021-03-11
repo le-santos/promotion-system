@@ -34,6 +34,7 @@ class PromotionsController < ApplicationController
 
   def update
     @promotion = Promotion.find(params[:id])
+    @product_categories = ProductCategory.all
 
     if @promotion.update(promotion_params)
       redirect_to @promotion
