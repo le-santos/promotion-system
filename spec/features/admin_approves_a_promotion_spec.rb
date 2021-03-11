@@ -46,7 +46,10 @@ feature 'Admin approves a promotion' do
                               code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                               expiration_date: '22/12/2033', user: creator)
 
-    mailer_spy = spy(PromotionMailer)
+    mailer_spy = class_spy('PromotionMailer')
+    mail_double = double('mail')
+    allow(mailer_spy).to receive(:notify_approval).with(any_args).and_return(mail_double)
+    allow(mail_double).to receive(:deliver_now)
     stub_const('PromotionMailer', mailer_spy)
                           
     login_as approval_user, scope: :user
