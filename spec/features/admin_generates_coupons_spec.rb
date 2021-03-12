@@ -33,4 +33,19 @@ feature 'Admin generates coupons' do
 
     expect(page).not_to have_link( 'Gerar Cupons' )
   end
+
+  scenario 'and hide button after promotion expired' do
+    user = User.create!(email: 'jose@email.com', password: '123456')
+    promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
+                                  code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
+                                  expiration_date: '22/12/2030', user: user)
+    promotion.update(expiration_date: 5.day.ago )
+    
+    login_as user, scope: :user
+    visit promotion_path(promotion)
+    
+    expect(page).not_to have_link('Gerar Cupons')
+    expect(page).to have_content('Promoção expirada')
+    expect(promotion.status).to eq(:expired)
+  end
 end

@@ -9,6 +9,10 @@ class Promotion < ApplicationRecord
   validates :name, :code, :discount_rate, :coupon_quantity, :expiration_date, presence: true
   validates :code, uniqueness: true
 
+  enum status: { active: 0 , expired: 10 }
+
+  after_initialize :check_expired
+
   def generate_coupons!
     Coupon.transaction do
       coupon_quantity >= coupons.size ? add_coupons : remove_coupons
@@ -44,4 +48,11 @@ class Promotion < ApplicationRecord
     promotion_approval&.user
   end
 
+  private
+
+  def check_expired
+    if expiration_date < Date.today
+      self.expired! 
+    end
+  end
 end

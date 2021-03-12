@@ -134,4 +134,17 @@ describe Promotion do
       end
     end
   end
+
+  context 'expired' do
+    it 'should change status after expiration' do
+      user = User.create!(email: 'jose@email.com', password: '123456')
+      promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                                      expiration_date: '22/12/2033', user: user)
+      promotion.update(expiration_date: 5.day.ago)
+
+      promotion.reload
+      expect(promotion.expired?).to be_truthy
+    end
+  end
 end
