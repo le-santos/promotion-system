@@ -79,5 +79,4 @@ class PromotionsController < ApplicationController
             :coupon_quantity,
             product_category_ids: [])
     end
-
 end

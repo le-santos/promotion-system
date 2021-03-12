@@ -10,7 +10,12 @@
 <hr>
 <dl>
   <dt>Nome:</dt>
-  <dd><%= @promotion.name %></dd>
+  <dd>
+    <%= @promotion.name %>
+    <% if @promotion.expired? %>
+      Promoção expirada
+    <% end %>
+  </dd>
   <dt>Descrição:</dt>
   <dd><%= @promotion.description %></dd>
   <dt>Porcentagem do Desconto:</dt>
@@ -46,7 +51,7 @@
 <%= link_to 'Excluir', @promotion, method: :delete, data: { confirm: 'Remover promoção?'} %>
 <br>
 
-<% unless @promotion.expired? && @promotion.coupons.size == @promotion.coupon_quantity %>
+<% unless @promotion.expired? || @promotion.coupons.size == @promotion.coupon_quantity %>
   <%= link_to 'Gerar Cupons', generate_coupons_promotion_path(@promotion), method: :post %>
 <% end %>
 

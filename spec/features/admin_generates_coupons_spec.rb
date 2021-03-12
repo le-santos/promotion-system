@@ -43,9 +43,10 @@ feature 'Admin generates coupons' do
     
     login_as user, scope: :user
     visit promotion_path(promotion)
+    promotion.reload
     
     expect(page).not_to have_link('Gerar Cupons')
     expect(page).to have_content('Promoção expirada')
-    expect(promotion.status).to eq(:expired)
+    expect(promotion.status).to eq('expired')
   end
 end

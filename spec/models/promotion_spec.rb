@@ -70,7 +70,6 @@ describe Promotion do
       promotion = Promotion.create!(name: 'Promoloucura', description: 'Descontos insanos',
                                   code: 'LOUCO40', discount_rate: 40,  coupon_quantity: 100, 
                                   expiration_date: '22/12/2030', user: user)
-
       promotion.coupons.create!(code: 'LOUCO40-0010')
 
       expect { promotion.generate_coupons! }.to raise_error(ActiveRecord::RecordNotUnique) 
@@ -145,6 +144,17 @@ describe Promotion do
 
       promotion.reload
       expect(promotion.expired?).to be_truthy
+    end
+    xit 'can not generate coupon after expiration' do
+      user = User.create!(email: 'jose@email.com', password: '123456')
+      promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                                      expiration_date: '22/12/2033', user: user)
+      promotion.update(expiration_date: 5.day.ago)
+
+      coupon.reload
+
+      expect { promotion.generate_coupons! }.to raise_error('Promoção expirada')
     end
   end
 end

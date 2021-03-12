@@ -8,10 +8,11 @@ class Promotion < ApplicationRecord
   
   validates :name, :code, :discount_rate, :coupon_quantity, :expiration_date, presence: true
   validates :code, uniqueness: true
+  validate :check_expired, on: :generate_coupons!
 
   enum status: { active: 0 , expired: 10 }
 
-  after_initialize :check_expired
+  after_initialize :check_expiration_date
 
   def generate_coupons!
     Coupon.transaction do
@@ -50,9 +51,17 @@ class Promotion < ApplicationRecord
 
   private
 
-  def check_expired
-    if expiration_date < Date.today
-      self.expired! 
+  def check_expiration_date
+    if !expiration_date.nil? && expiration_date < Date.today
+      self.expired!
+      coupons.each do |coupon|
+        coupon.cancel_coupon! 
+      end
     end
+  end
+
+  def check_expired
+    p 'validates'
+    errors.add(:expiration_date, message: 'Promoção expirada') if expired?
   end
 end
